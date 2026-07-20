@@ -38,7 +38,7 @@ const links = [
   </div>
 
   <!-- Mobile menu -->
-  <div id="mobile-menu" class="hidden md:hidden bg-dark-950/95 backdrop-blur-md border-b border-dark-800">
+  <div id="mobile-menu" data-open="false" class="hidden md:hidden bg-dark-950/95 backdrop-blur-md border-b border-dark-800">
     <div class="px-6 py-4 flex flex-col gap-4">
       {links.map((link) => (
         <a
@@ -58,12 +58,15 @@ const links = [
   const menu = document.getElementById('mobile-menu');
 
   btn?.addEventListener('click', () => {
+    const isOpen = menu?.dataset.open === 'true';
     menu?.classList.toggle('hidden');
+    if (menu) menu.dataset.open = isOpen ? 'false' : 'true';
   });
 
   document.querySelectorAll('.mobile-link').forEach((link) => {
     link.addEventListener('click', () => {
       menu?.classList.add('hidden');
+      if (menu) menu.dataset.open = 'false';
     });
   });
 </script>
