@@ -43,7 +43,7 @@ const services = [
     <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mt-12 stagger-children">
       {services.map((service) => (
         <div class="glass-card p-6 hover:border-emerald-600/30 transition-all duration-300 group">
-          <div class="text-emerald-600 mb-4 group-hover:scale-110 transition-transform duration-300" set:html={service.icon} />
+          <div class="text-emerald-400 mb-4 group-hover:scale-110 transition-transform duration-300" set:html={service.icon} />
           <h3 class="text-lg font-semibold text-dark-50 mb-2">{service.title}</h3>
           <p class="text-dark-400 text-sm leading-relaxed">{service.description}</p>
         </div>

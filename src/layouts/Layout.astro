@@ -14,12 +14,22 @@ const { title } = Astro.props;
     <meta name="description" content="Lydia Kipkorir - Software Engineer specialising in full-stack development, API architecture, and AI/ML integration." />
     <link rel="icon" type="image/svg+xml" href="/portfolioWebsite/favicon.svg" />
     <title>{title}</title>
+    <script is:inline>
+      // Apply saved theme immediately to prevent flash
+      const t = localStorage.getItem('theme') || 'dark';
+      document.documentElement.setAttribute('data-theme', t);
+    </script>
   </head>
   <body class="min-h-screen">
+    <!-- Skip to content (WCAG 2.4.1) -->
+    <a href="#main-content" class="skip-link bg-emerald-600 text-white">
+      Skip to main content
+    </a>
+
     <slot />
 
     <script>
-      // Scroll-triggered animations
+      // Scroll-triggered animations (respects prefers-reduced-motion via CSS)
       const observer = new IntersectionObserver(
         (entries) => {
           entries.forEach((entry) => {

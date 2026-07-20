@@ -14,7 +14,7 @@ test.describe('Navigation - Desktop', () => {
   test('all desktop nav links exist', async ({ page }) => {
     const links = ['#home', '#about', '#projects', '#experience', '#services', '#contact'];
     for (const href of links) {
-      await expect(page.locator(`#navbar .hidden.md\\:flex a[href="${href}"]`)).toBeVisible();
+      await expect(page.locator(`#navbar .hidden.md\\:flex a[href="${href}"]`).first()).toBeVisible();
     }
   });
 

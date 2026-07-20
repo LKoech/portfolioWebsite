@@ -37,19 +37,50 @@
 
   ctx.font = `${FONT_SIZE}px JetBrains Mono, monospace`;
 
+  const THEME_COLORS: Record<string, { bg: string; particle: string; maxOpacity: number }> = {
+    dark: {
+      bg: 'rgba(9, 9, 11, 0.1)',
+      particle: '5, 150, 105',
+      maxOpacity: 0.15,
+    },
+    light: {
+      bg: 'rgba(248, 248, 250, 0.05)',
+      particle: '5, 150, 105',
+      maxOpacity: 0.4,
+    },
+    'high-contrast': {
+      bg: 'rgba(0, 0, 0, 0.1)',
+      particle: '16, 185, 129',
+      maxOpacity: 0.25,
+    },
+  };
+
+  function getTheme(): string {
+    return document.documentElement.getAttribute('data-theme') || 'dark';
+  }
+
+  let colors = THEME_COLORS[getTheme()] || THEME_COLORS.dark;
+
+  window.addEventListener('theme-change', () => {
+    const theme = getTheme();
+    colors = THEME_COLORS[theme] || THEME_COLORS.dark;
+    // Clear canvas fully on theme switch
+    ctx.clearRect(0, 0, width, height);
+  });
+
   function animate() {
-    ctx.fillStyle = 'rgba(9, 9, 11, 0.1)';
+    ctx.fillStyle = colors.bg;
     ctx.fillRect(0, 0, width, height);
 
     for (let i = 0; i < drops.length; i++) {
       const d = drops[i];
 
-      // Randomly switch between 0 and 1
       if (Math.random() < 0.05) {
         d.char = Math.random() > 0.5 ? '1' : '0';
       }
 
-      ctx.fillStyle = `rgba(5, 150, 105, ${d.opacity})`;
+      const opacity = Math.min(d.opacity, colors.maxOpacity);
+      ctx.fillStyle = `rgba(${colors.particle}, ${opacity})`;
       ctx.fillText(d.char, i * COLUMN_WIDTH, d.y);
 
       d.y += d.speed;
