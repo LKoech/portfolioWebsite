@@ -17,11 +17,6 @@ export default {
           900: '#18181b',
           950: '#09090b',
         },
-        accent: {
-          DEFAULT: '#6366f1',
-          light: '#818cf8',
-          dark: '#4f46e5',
-        },
       },
       fontFamily: {
         sans: ['Inter', 'system-ui', 'sans-serif'],

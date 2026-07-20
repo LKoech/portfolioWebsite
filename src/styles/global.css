@@ -14,7 +14,7 @@
   }
 
   ::selection {
-    @apply bg-accent/30 text-white;
+    @apply bg-emerald-600/30 text-white;
   }
 
   ::-webkit-scrollbar {
@@ -32,7 +32,7 @@
 
 @layer components {
   .section-heading {
-    @apply text-sm font-mono tracking-widest uppercase text-accent mb-2;
+    @apply text-sm font-mono tracking-widest uppercase text-emerald-600 mb-2;
   }
 
   .section-title {
@@ -44,15 +44,15 @@
   }
 
   .gradient-text {
-    @apply bg-gradient-to-r from-accent-light via-accent to-purple-400 bg-clip-text text-transparent;
+    @apply bg-gradient-to-r from-emerald-500 via-emerald-600 to-teal-400 bg-clip-text text-transparent;
   }
 
   .btn-primary {
-    @apply inline-flex items-center gap-2 px-6 py-3 bg-accent hover:bg-accent-dark text-white font-medium rounded-xl transition-all duration-300 hover:shadow-lg hover:shadow-accent/25;
+    @apply inline-flex items-center gap-2 px-6 py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-medium rounded-xl transition-all duration-300 hover:shadow-lg hover:shadow-emerald-600/25;
   }
 
   .btn-outline {
-    @apply inline-flex items-center gap-2 px-6 py-3 border border-dark-700 hover:border-accent text-dark-200 hover:text-accent font-medium rounded-xl transition-all duration-300;
+    @apply inline-flex items-center gap-2 px-6 py-3 border border-dark-700 hover:border-emerald-600 text-dark-200 hover:text-emerald-600 font-medium rounded-xl transition-all duration-300;
   }
 }
 
@@ -109,7 +109,7 @@
 .typing-cursor::after {
   content: '|';
   animation: blink 1s step-end infinite;
-  @apply text-accent ml-1;
+  @apply text-emerald-600 ml-1;
 }
 
 @keyframes blink {
