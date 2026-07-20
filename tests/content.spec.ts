@@ -17,6 +17,13 @@ test.describe('Hero Section', () => {
     await expect(page.locator('a:has-text("Let\'s Talk")')).toBeVisible();
     await expect(page.locator('a:has-text("View Projects")')).toBeVisible();
   });
+
+  test('has View CV button', async ({ page }) => {
+    const cvBtn = page.locator('a:has-text("View CV")');
+    await expect(cvBtn).toBeVisible();
+    await expect(cvBtn).toHaveAttribute('href', '/portfolioWebsite/Lydia_Kipkorir_resume.pdf');
+    await expect(cvBtn).toHaveAttribute('target', '_blank');
+  });
 });
 
 test.describe('Projects Section', () => {
@@ -62,23 +69,35 @@ test.describe('Experience Section', () => {
     await page.goto('/portfolioWebsite/');
   });
 
-  test('renders all 4 experience entries', async ({ page }) => {
-    const cards = page.locator('#experience .glass-card');
-    await expect(cards).toHaveCount(4);
+  test('renders all 3 experience entries', async ({ page }) => {
+    const entries = page.locator('#experience .flex.items-center.gap-4');
+    await expect(entries).toHaveCount(3);
   });
 
-  test('does not mention Goldman Sachs', async ({ page }) => {
+  test('displays Goldman Sachs', async ({ page }) => {
     const expSection = page.locator('#experience');
-    await expect(expSection).not.toContainText('Goldman Sachs');
+    await expect(expSection).toContainText('Goldman Sachs');
   });
 
   test('displays correct job titles', async ({ page }) => {
     await expect(page.locator('#experience')).toContainText('Software Engineer, Full-Stack');
     await expect(page.locator('#experience')).toContainText('Engineering Summer Intern');
-    await expect(page.locator('#experience')).toContainText('Lead of Marketing');
     await expect(page.locator('#experience')).toContainText('Mentor');
   });
+
+  test('displays company logos', async ({ page }) => {
+    const logos = page.locator('#experience img');
+    await expect(logos).toHaveCount(3);
+  });
+
+  test('displays one-line descriptions', async ({ page }) => {
+    await expect(page.locator('#experience')).toContainText('10+ APIs');
+    await expect(page.locator('#experience')).toContainText('Elasticsearch');
+    await expect(page.locator('#experience')).toContainText('Mentoring');
+  });
+
 });
+
 
 test.describe('Services Section', () => {
   test('renders all 6 service cards', async ({ page }) => {
