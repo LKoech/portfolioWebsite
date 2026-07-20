@@ -10,10 +10,13 @@ import Services from '../components/Services.astro';
 import Process from '../components/Process.astro';
 import Contact from '../components/Contact.astro';
 import Footer from '../components/Footer.astro';
+import ChatWidget from '../components/ChatWidget.astro';
+import ParticleBackground from '../components/ParticleBackground.astro';
 import '../styles/global.css';
 ---
 
 <Layout title="Lydia Kipkorir | Software Engineer">
+  <ParticleBackground />
   <Nav />
   <Hero />
   <Skills />
@@ -24,4 +27,5 @@ import '../styles/global.css';
   <Process />
   <Contact />
   <Footer />
+  <ChatWidget />
 </Layout>

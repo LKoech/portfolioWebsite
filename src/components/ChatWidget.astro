@@ -1,0 +1,215 @@
+---
+
+---
+
+<!-- Chat Bubble Button -->
+<button
+  id="chat-toggle"
+  class="fixed bottom-6 right-6 w-14 h-14 bg-accent hover:bg-accent-dark rounded-full shadow-lg shadow-accent/25 flex items-center justify-center transition-all duration-300 z-50 hover:scale-110"
+  aria-label="Chat with AI assistant"
+>
+  <svg id="chat-icon" class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+  </svg>
+  <svg id="close-icon" class="w-6 h-6 text-white hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+  </svg>
+</button>
+
+<!-- Chat Window -->
+<div
+  id="chat-window"
+  class="fixed bottom-24 right-6 w-80 sm:w-96 max-h-[500px] glass-card flex flex-col z-50 hidden overflow-hidden"
+>
+  <!-- Header -->
+  <div class="px-4 py-3 border-b border-dark-800 flex items-center gap-3">
+    <div class="w-8 h-8 rounded-full bg-accent flex items-center justify-center">
+      <span class="text-white text-xs font-bold">LK</span>
+    </div>
+    <div>
+      <p class="text-sm font-semibold text-dark-50">Lydia's Assistant</p>
+      <p class="text-xs text-green-400">Online</p>
+    </div>
+  </div>
+
+  <!-- Messages -->
+  <div id="chat-messages" class="flex-grow overflow-y-auto p-4 space-y-3 min-h-[300px]">
+    <div class="flex gap-2">
+      <div class="w-6 h-6 rounded-full bg-accent flex items-center justify-center flex-shrink-0 mt-1">
+        <span class="text-white text-[10px] font-bold">LK</span>
+      </div>
+      <div class="bg-dark-800 rounded-2xl rounded-tl-sm px-3 py-2 max-w-[80%]">
+        <p class="text-sm text-dark-200">Hi! I'm Lydia's AI assistant. Ask me anything about her experience, projects, or skills.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Input -->
+  <div class="p-3 border-t border-dark-800">
+    <form id="chat-form" class="flex gap-2">
+      <input
+        id="chat-input"
+        type="text"
+        placeholder="Ask about Lydia..."
+        class="flex-grow bg-dark-800 border border-dark-700 rounded-xl px-3 py-2 text-sm text-dark-50 placeholder-dark-500 focus:outline-none focus:border-accent transition-colors"
+        autocomplete="off"
+      />
+      <button
+        type="submit"
+        class="bg-accent hover:bg-accent-dark text-white rounded-xl px-3 py-2 transition-colors"
+        aria-label="Send message"
+      >
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+        </svg>
+      </button>
+    </form>
+  </div>
+</div>
+
+<script>
+  const GROQ_API_KEY = import.meta.env.PUBLIC_GROQ_API_KEY || '';
+
+  const SYSTEM_PROMPT = `You are Lydia Kipkorir's friendly portfolio assistant. Answer questions about her based on the following information. Keep responses concise (2-3 sentences max). Be warm and professional.
+
+ABOUT LYDIA:
+- Software Engineer with full-stack development experience
+- BSc. Applied Computer Technology from USIU-Africa, Nairobi, Kenya (Jun 2021 - Dec 2024)
+- Email: lydiakipkorir1@gmail.com
+- GitHub: github.com/LKoech (38 public repos)
+- LinkedIn: linkedin.com/in/lydia-kipkorir1
+
+EXPERIENCE:
+- Software Engineer, Full-Stack at Goldman Sachs (Dec 2024 - Feb 2026): Built and optimised 10+ RESTful APIs with Spring Boot. Maintained 96% test coverage with Mockito and Cypress. Led DynamoDB architectural analysis. Shipped 5+ user-facing features for 300+ users.
+- Engineering Summer Intern at Goldman Sachs (Jun 2022 - Aug 2022): Built Elasticsearch queries and Spring Boot REST endpoints for an enterprise search tool serving 300+ users.
+- Mentor at Rewriting Code Club (Dec 2023 - Present): Mentoring emerging young women in tech.
+
+SKILLS:
+- Backend: Java, Spring Boot, Spring Security, REST APIs, SQL, PostgreSQL, DynamoDB, Elasticsearch
+- Frontend: JavaScript, TypeScript, React
+- Testing: Mockito, Cypress, JUnit (96% coverage)
+- AI/ML: Python, PyTorch, Hugging Face Whisper, scikit-learn, Groq API
+- DevOps: Docker, CI/CD, Git
+- Tools: Swagger, Postman, Jira, GitHub Copilot
+
+PROJECTS:
+- Voice-to-Voice Translator: Real-time translation for English, Swahili, Zulu using Groq Whisper + Llama 3.3 70B + Edge-TTS. Dockerised.
+- JWT Authentication Service: Spring Boot 4, Spring Security, HS256 tokens, JPA/PostgreSQL.
+- MusicTranslateApp: Speech transcription for African languages using Hugging Face Whisper + PyTorch.
+- Disease Prediction App: ML model with 88% accuracy using scikit-learn and pandas.
+- Library Management System: Java Spring Boot CRUD application.
+- AI Resume Analyser: AI-powered resume feedback tool.
+
+If asked something you don't know about Lydia, say you don't have that information and suggest contacting her directly.`;
+
+  const chatToggle = document.getElementById('chat-toggle');
+  const chatWindow = document.getElementById('chat-window');
+  const chatIcon = document.getElementById('chat-icon');
+  const closeIcon = document.getElementById('close-icon');
+  const chatForm = document.getElementById('chat-form');
+  const chatInput = document.getElementById('chat-input') as HTMLInputElement;
+  const chatMessages = document.getElementById('chat-messages');
+
+  let messages: { role: string; content: string }[] = [
+    { role: 'system', content: SYSTEM_PROMPT },
+  ];
+
+  chatToggle?.addEventListener('click', () => {
+    chatWindow?.classList.toggle('hidden');
+    chatIcon?.classList.toggle('hidden');
+    closeIcon?.classList.toggle('hidden');
+  });
+
+  function addMessage(content: string, isUser: boolean) {
+    const wrapper = document.createElement('div');
+    wrapper.className = `flex gap-2 ${isUser ? 'justify-end' : ''}`;
+
+    if (isUser) {
+      wrapper.innerHTML = `
+        <div class="bg-accent/20 rounded-2xl rounded-tr-sm px-3 py-2 max-w-[80%]">
+          <p class="text-sm text-dark-200">${content}</p>
+        </div>
+      `;
+    } else {
+      wrapper.innerHTML = `
+        <div class="w-6 h-6 rounded-full bg-accent flex items-center justify-center flex-shrink-0 mt-1">
+          <span class="text-white text-[10px] font-bold">LK</span>
+        </div>
+        <div class="bg-dark-800 rounded-2xl rounded-tl-sm px-3 py-2 max-w-[80%]">
+          <p class="text-sm text-dark-200">${content}</p>
+        </div>
+      `;
+    }
+
+    chatMessages?.appendChild(wrapper);
+    chatMessages!.scrollTop = chatMessages!.scrollHeight;
+  }
+
+  function addTypingIndicator() {
+    const wrapper = document.createElement('div');
+    wrapper.className = 'flex gap-2';
+    wrapper.id = 'typing-indicator';
+    wrapper.innerHTML = `
+      <div class="w-6 h-6 rounded-full bg-accent flex items-center justify-center flex-shrink-0 mt-1">
+        <span class="text-white text-[10px] font-bold">LK</span>
+      </div>
+      <div class="bg-dark-800 rounded-2xl rounded-tl-sm px-3 py-2">
+        <p class="text-sm text-dark-400">Typing...</p>
+      </div>
+    `;
+    chatMessages?.appendChild(wrapper);
+    chatMessages!.scrollTop = chatMessages!.scrollHeight;
+  }
+
+  function removeTypingIndicator() {
+    document.getElementById('typing-indicator')?.remove();
+  }
+
+  chatForm?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const input = chatInput.value.trim();
+    if (!input) return;
+
+    addMessage(input, true);
+    chatInput.value = '';
+    messages.push({ role: 'user', content: input });
+
+    if (!GROQ_API_KEY) {
+      addMessage("I'm not configured yet. Please ask Lydia to set up the API key.", false);
+      return;
+    }
+
+    addTypingIndicator();
+
+    try {
+      const res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${GROQ_API_KEY}`,
+        },
+        body: JSON.stringify({
+          model: 'llama-3.1-8b-instant',
+          messages: messages,
+          max_tokens: 256,
+          temperature: 0.7,
+        }),
+      });
+
+      removeTypingIndicator();
+
+      if (!res.ok) {
+        addMessage("Sorry, I'm having trouble connecting right now. Please try again later.", false);
+        return;
+      }
+
+      const data = await res.json();
+      const reply = data.choices[0]?.message?.content || "I couldn't generate a response.";
+      messages.push({ role: 'assistant', content: reply });
+      addMessage(reply, false);
+    } catch {
+      removeTypingIndicator();
+      addMessage("Sorry, something went wrong. Please try again later.", false);
+    }
+  });
+</script>

@@ -1,0 +1,75 @@
+---
+
+---
+
+<canvas id="particle-canvas" class="fixed inset-0 z-0 pointer-events-none"></canvas>
+
+<script>
+  const canvas = document.getElementById('particle-canvas') as HTMLCanvasElement;
+  const ctx = canvas.getContext('2d')!;
+
+  let width = window.innerWidth;
+  let height = window.innerHeight;
+  canvas.width = width;
+  canvas.height = height;
+
+  const COLUMN_WIDTH = 20;
+  const COLUMNS = Math.floor(width / COLUMN_WIDTH);
+  const FONT_SIZE = 14;
+
+  interface Drop {
+    y: number;
+    speed: number;
+    opacity: number;
+    char: string;
+  }
+
+  const drops: Drop[] = [];
+
+  for (let i = 0; i < COLUMNS; i++) {
+    drops.push({
+      y: Math.random() * height * -1,
+      speed: Math.random() * 1.5 + 0.3,
+      opacity: Math.random() * 0.15 + 0.03,
+      char: Math.random() > 0.5 ? '1' : '0',
+    });
+  }
+
+  ctx.font = `${FONT_SIZE}px JetBrains Mono, monospace`;
+
+  function animate() {
+    ctx.fillStyle = 'rgba(9, 9, 11, 0.1)';
+    ctx.fillRect(0, 0, width, height);
+
+    for (let i = 0; i < drops.length; i++) {
+      const d = drops[i];
+
+      // Randomly switch between 0 and 1
+      if (Math.random() < 0.05) {
+        d.char = Math.random() > 0.5 ? '1' : '0';
+      }
+
+      ctx.fillStyle = `rgba(99, 102, 241, ${d.opacity})`;
+      ctx.fillText(d.char, i * COLUMN_WIDTH, d.y);
+
+      d.y += d.speed;
+
+      if (d.y > height) {
+        d.y = -FONT_SIZE;
+        d.speed = Math.random() * 1.5 + 0.3;
+        d.opacity = Math.random() * 0.15 + 0.03;
+      }
+    }
+
+    requestAnimationFrame(animate);
+  }
+
+  window.addEventListener('resize', () => {
+    width = window.innerWidth;
+    height = window.innerHeight;
+    canvas.width = width;
+    canvas.height = height;
+  });
+
+  animate();
+</script>
