@@ -2,7 +2,7 @@
 
 Personal portfolio website built with Astro and Tailwind CSS. Features a dark/light/high-contrast theme toggle, binary rain background animation, and an AI-powered chat assistant.
 
-**Live:** [lkoech.github.io/portfolioWebsite](https://lkoech.github.io/portfolioWebsite)
+**Live:** [lydiakipkorir.xyz](https://lydiakipkorir.xyz)
 
 ## Tech Stack
 

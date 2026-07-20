@@ -4,7 +4,7 @@ test.describe('Navigation - Desktop', () => {
   test.use({ viewport: { width: 1280, height: 720 } });
 
   test.beforeEach(async ({ page }) => {
-    await page.goto('/portfolioWebsite/');
+    await page.goto('/');
   });
 
   test('navbar is visible', async ({ page }) => {
@@ -42,12 +42,12 @@ test.describe('Mobile Navigation', () => {
   test.use({ viewport: { width: 375, height: 812 } });
 
   test('mobile menu button is visible', async ({ page }) => {
-    await page.goto('/portfolioWebsite/');
+    await page.goto('/');
     await expect(page.locator('#mobile-menu-btn')).toBeVisible();
   });
 
   test('mobile menu toggles on click', async ({ page }) => {
-    await page.goto('/portfolioWebsite/');
+    await page.goto('/');
     const menu = page.locator('#mobile-menu');
     await expect(menu).toHaveAttribute('data-open', 'false');
     await page.click('#mobile-menu-btn');
@@ -55,7 +55,7 @@ test.describe('Mobile Navigation', () => {
   });
 
   test('mobile menu closes when link is clicked', async ({ page }) => {
-    await page.goto('/portfolioWebsite/');
+    await page.goto('/');
     await page.click('#mobile-menu-btn');
     const menu = page.locator('#mobile-menu');
     await expect(menu).toHaveAttribute('data-open', 'true');
@@ -64,7 +64,7 @@ test.describe('Mobile Navigation', () => {
   });
 
   test('all mobile nav links exist', async ({ page }) => {
-    await page.goto('/portfolioWebsite/');
+    await page.goto('/');
     await page.click('#mobile-menu-btn');
     const links = ['#home', '#about', '#projects', '#experience', '#services', '#contact'];
     for (const href of links) {

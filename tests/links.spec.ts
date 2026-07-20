@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test';
 
 test.describe('External Links', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto('/portfolioWebsite/');
+    await page.goto('/');
   });
 
   test('GitHub links point to correct profile', async ({ page }) => {

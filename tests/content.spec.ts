@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test';
 
 test.describe('Hero Section', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto('/portfolioWebsite/');
+    await page.goto('/');
   });
 
   test('displays name and role', async ({ page }) => {
@@ -15,13 +15,13 @@ test.describe('Hero Section', () => {
     await expect(page.locator('a:has-text("View Projects")')).toBeVisible();
     const cvBtn = page.locator('a:has-text("View CV")');
     await expect(cvBtn).toBeVisible();
-    await expect(cvBtn).toHaveAttribute('href', '/portfolioWebsite/Lydia_Kipkorir_resume.pdf');
+    await expect(cvBtn).toHaveAttribute('href', '/Lydia_Kipkorir_resume.pdf');
   });
 });
 
 test.describe('Projects Section', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto('/portfolioWebsite/');
+    await page.goto('/');
   });
 
   test('renders 6 project cards linking to GitHub', async ({ page }) => {
@@ -34,7 +34,7 @@ test.describe('Projects Section', () => {
 
 test.describe('Experience Section', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto('/portfolioWebsite/');
+    await page.goto('/');
   });
 
   test('renders 3 entries with logos and descriptions', async ({ page }) => {
@@ -49,7 +49,7 @@ test.describe('Experience Section', () => {
 
 test.describe('About Section', () => {
   test('displays stats and does not mention Goldman Sachs', async ({ page }) => {
-    await page.goto('/portfolioWebsite/');
+    await page.goto('/');
     const about = page.locator('#about');
     await expect(about).toContainText('2+');
     await expect(about).toContainText('10+');
@@ -61,12 +61,12 @@ test.describe('About Section', () => {
 
 test.describe('Services & Contact', () => {
   test('renders 6 service cards', async ({ page }) => {
-    await page.goto('/portfolioWebsite/');
+    await page.goto('/');
     await expect(page.locator('#services .glass-card')).toHaveCount(6);
   });
 
   test('displays correct email', async ({ page }) => {
-    await page.goto('/portfolioWebsite/');
+    await page.goto('/');
     await expect(page.locator('a[href="mailto:lydiakipkorir1@gmail.com"]').first()).toBeVisible();
   });
 });

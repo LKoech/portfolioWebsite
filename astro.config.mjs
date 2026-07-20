@@ -3,7 +3,6 @@ import tailwind from '@astrojs/tailwind';
 
 export default defineConfig({
   integrations: [tailwind()],
-  site: 'https://LKoech.github.io',
-  base: '/portfolioWebsite',
+  site: 'https://lydiakipkorir.xyz',
   output: 'static',
 });
