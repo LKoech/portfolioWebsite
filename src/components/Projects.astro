@@ -1,0 +1,108 @@
+---
+const projects = [
+  {
+    title: 'Voice-to-Voice Translator',
+    description: 'Real-time voice translation app for English, Swahili, and Zulu. 3-stage pipeline: Groq Whisper (speech-to-text), Llama 3.3 70B (translation), and Edge-TTS (audio output). Containerised with Docker.',
+    tags: ['Python', 'Groq API', 'Whisper', 'Llama 3.3', 'Docker', 'Streamlit'],
+    github: 'https://github.com/LKoech/Voice-Voice-Translator',
+    category: 'AI / NLP',
+  },
+  {
+    title: 'JWT Authentication Service',
+    description: 'Full JWT authentication and authorisation service with Spring Security filter chain, HS256-signed token generation/validation, and JPA/PostgreSQL user persistence with role-based access control.',
+    tags: ['Java 17', 'Spring Boot', 'Spring Security', 'PostgreSQL', 'JWT'],
+    github: 'https://github.com/LKoech/JWT-Authentication-and-Authorization',
+    category: 'Backend',
+  },
+  {
+    title: 'MusicTranslateApp',
+    description: 'Real-time speech transcription tool for underserved African languages. Integrates Hugging Face Whisper model and PyTorch with GPU/CPU fallback architecture.',
+    tags: ['Python', 'PyTorch', 'Hugging Face', 'Whisper'],
+    github: 'https://github.com/LKoech/MusicTranslateApp',
+    category: 'AI / ML',
+  },
+  {
+    title: 'Disease Prediction App',
+    description: 'Clinical disease prediction model achieving 88% accuracy. Full ML pipeline from dataset sourcing through model evaluation using scikit-learn and pandas.',
+    tags: ['Python', 'scikit-learn', 'pandas', 'ML'],
+    github: 'https://github.com/LKoech/Disease-Prediction',
+    category: 'Machine Learning',
+  },
+  {
+    title: 'Library Management System',
+    description: 'A Library Management System built with Java Spring Boot, demonstrating clean architecture patterns and CRUD operations.',
+    tags: ['Java', 'Spring Boot', 'REST API'],
+    github: 'https://github.com/LKoech/LibraryManagementSystem',
+    category: 'Backend',
+  },
+  {
+    title: 'AI Resume Analyser',
+    description: 'An AI-powered resume analyser that evaluates resumes and provides intelligent feedback for improvement.',
+    tags: ['JavaScript', 'AI', 'NLP'],
+    github: 'https://github.com/LKoech/ai-resume-analyser',
+    category: 'AI Tool',
+  },
+];
+---
+
+<section id="projects" class="py-24">
+  <div class="max-w-6xl mx-auto px-6">
+    <div class="fade-up">
+      <p class="section-heading">Portfolio</p>
+      <h2 class="section-title">Selected Work</h2>
+      <p class="text-dark-400 mb-12 max-w-xl">
+        A curated selection of projects spanning full-stack development, AI/ML integration, and backend architecture.
+      </p>
+    </div>
+
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 stagger-children">
+      {projects.map((project) => (
+        <a
+          href={project.github}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="glass-card p-6 group hover:border-accent/50 transition-all duration-300 hover:-translate-y-1 flex flex-col"
+        >
+          <div class="flex items-center justify-between mb-4">
+            <span class="text-xs font-mono text-accent bg-accent/10 px-3 py-1 rounded-full">
+              {project.category}
+            </span>
+            <svg class="w-5 h-5 text-dark-600 group-hover:text-accent transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+            </svg>
+          </div>
+
+          <h3 class="text-lg font-semibold text-dark-50 mb-2 group-hover:text-accent transition-colors">
+            {project.title}
+          </h3>
+
+          <p class="text-dark-400 text-sm mb-4 flex-grow leading-relaxed">
+            {project.description}
+          </p>
+
+          <div class="flex flex-wrap gap-2 mt-auto">
+            {project.tags.map((tag) => (
+              <span class="text-xs px-2 py-1 bg-dark-800 text-dark-400 rounded-md">
+                {tag}
+              </span>
+            ))}
+          </div>
+        </a>
+      ))}
+    </div>
+
+    <div class="text-center mt-12 fade-up">
+      <a
+        href="https://github.com/LKoech?tab=repositories"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="btn-outline"
+      >
+        View All 38 Repositories
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+        </svg>
+      </a>
+    </div>
+  </div>
+</section>

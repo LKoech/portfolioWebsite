@@ -1,0 +1,20 @@
+---
+const skills = [
+  'Java', 'Spring Boot', 'Python', 'TypeScript', 'React',
+  'REST APIs', 'SQL', 'PostgreSQL', 'DynamoDB', 'Elasticsearch',
+  'Mockito', 'Cypress', 'JUnit', 'Docker', 'CI/CD',
+  'Git', 'Jira', 'Swagger', 'scikit-learn', 'PyTorch',
+];
+---
+
+<section class="py-12 border-y border-dark-800/50 overflow-hidden">
+  <div class="relative">
+    <div class="skill-scroll flex gap-4 w-max">
+      {[...skills, ...skills].map((skill) => (
+        <span class="px-4 py-2 bg-dark-900 border border-dark-800 rounded-full text-sm text-dark-300 whitespace-nowrap hover:border-accent hover:text-accent transition-colors duration-200">
+          {skill}
+        </span>
+      ))}
+    </div>
+  </div>
+</section>

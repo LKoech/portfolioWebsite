@@ -1,0 +1,52 @@
+---
+const steps = [
+  {
+    number: '01',
+    title: 'Discovery & Requirements',
+    description: 'Understanding the problem space, gathering requirements, and defining scope with stakeholders.',
+  },
+  {
+    number: '02',
+    title: 'Architecture & Design',
+    description: 'Designing scalable solutions, evaluating trade-offs, and planning the technical approach.',
+  },
+  {
+    number: '03',
+    title: 'Development & Testing',
+    description: 'Building features iteratively with comprehensive test coverage and continuous integration.',
+  },
+  {
+    number: '04',
+    title: 'Deploy & Iterate',
+    description: 'Shipping to production, monitoring performance, and iterating based on user feedback.',
+  },
+];
+---
+
+<section class="py-24 bg-dark-900/30">
+  <div class="max-w-6xl mx-auto px-6">
+    <div class="fade-up">
+      <p class="section-heading">How I Work</p>
+      <h2 class="section-title">My Process</h2>
+    </div>
+
+    <div class="grid md:grid-cols-4 gap-6 mt-12 stagger-children">
+      {steps.map((step, i) => (
+        <div class="relative">
+          <div class="glass-card p-6 hover:border-accent/30 transition-all duration-300 h-full">
+            <span class="text-4xl font-bold gradient-text opacity-50 mb-4 block">{step.number}</span>
+            <h3 class="text-lg font-semibold text-dark-50 mb-2">{step.title}</h3>
+            <p class="text-dark-400 text-sm leading-relaxed">{step.description}</p>
+          </div>
+          {i < steps.length - 1 && (
+            <div class="hidden md:block absolute top-1/2 -right-3 transform -translate-y-1/2 z-10">
+              <svg class="w-6 h-6 text-dark-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+              </svg>
+            </div>
+          )}
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
