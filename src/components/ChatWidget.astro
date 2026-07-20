@@ -68,7 +68,7 @@
 </div>
 
 <script>
-  const GROQ_API_KEY = import.meta.env.PUBLIC_GROQ_API_KEY || '';
+  const WORKER_URL = import.meta.env.PUBLIC_CHAT_WORKER_URL || 'http://localhost:8787';
 
   const SYSTEM_PROMPT = `You are Lydia Kipkorir's friendly portfolio assistant. Answer questions about her based on the following information. Keep responses concise (2-3 sentences max). Be warm and professional.
 
@@ -174,26 +174,15 @@ If asked something you don't know about Lydia, say you don't have that informati
     chatInput.value = '';
     messages.push({ role: 'user', content: input });
 
-    if (!GROQ_API_KEY) {
-      addMessage("I'm not configured yet. Please ask Lydia to set up the API key.", false);
-      return;
-    }
-
     addTypingIndicator();
 
     try {
-      const res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+      const res = await fetch(WORKER_URL, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${GROQ_API_KEY}`,
         },
-        body: JSON.stringify({
-          model: 'llama-3.1-8b-instant',
-          messages: messages,
-          max_tokens: 256,
-          temperature: 0.7,
-        }),
+        body: JSON.stringify({ messages }),
       });
 
       removeTypingIndicator();

@@ -1,0 +1,14 @@
+{
+  "name": "portfolio-chat-proxy",
+  "private": true,
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy"
+  },
+  "devDependencies": {
+    "wrangler": "^4.112.0"
+  },
+  "dependencies": {
+    "login": "^0.8.0"
+  }
+}
