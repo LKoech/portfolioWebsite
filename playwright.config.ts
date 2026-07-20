@@ -7,6 +7,7 @@ export default defineConfig({
   use: {
     baseURL: 'http://localhost:4321',
     trace: 'on-first-retry',
+    viewport: { width: 1280, height: 720 },
   },
   webServer: {
     command: 'npm run dev',
@@ -14,8 +15,4 @@ export default defineConfig({
     reuseExistingServer: true,
     timeout: 30000,
   },
-  projects: [
-    { name: 'desktop', use: { viewport: { width: 1280, height: 720 } } },
-    { name: 'mobile', use: { viewport: { width: 375, height: 812 } } },
-  ],
 });

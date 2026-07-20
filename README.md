@@ -53,15 +53,15 @@ npx playwright test tests/functionality.spec.ts
 
 ### Test Suites
 
-| File | Tests | What it covers |
+| File | Count | What it covers |
 |------|-------|----------------|
-| `build.spec.ts` | Page load, title, meta, favicon |
-| `content.spec.ts` | Section content, projects, experience |
-| `links.spec.ts` | External links, target, rel attributes |
-| `navigation.spec.ts` | Nav links, mobile menu, scroll |
-| `responsive.spec.ts` | Desktop/mobile layouts, overflow |
-| `accessibility.spec.ts` | Skip link, theme toggle, reduced motion, ARIA |
-| `functionality.spec.ts` | Button clicks, scroll targets, chat widget |
+| `build.spec.ts` | 8 | Page load, title, meta, favicon |
+| `content.spec.ts` | 44 | Section content, projects, experience |
+| `links.spec.ts` | 8 | External links, target, rel attributes |
+| `navigation.spec.ts` | 18 | Nav links, mobile menu, scroll |
+| `responsive.spec.ts` | 12 | Desktop/mobile layouts, overflow |
+| `accessibility.spec.ts` | 22 | Skip link, theme toggle, reduced motion, ARIA |
+| `functionality.spec.ts` | 48 | Button clicks, scroll targets, chat widget |
 
 ## Chat Assistant Setup
 
@@ -79,34 +79,6 @@ npx wrangler secret put GROQ_API_KEY
 Set the worker URL in `.env`:
 ```
 PUBLIC_CHAT_WORKER_URL=https://your-worker.workers.dev
-```
-
-## Project Structure
-
-```
-src/
-├── components/
-│   ├── Nav.astro              # Navigation + theme toggle
-│   ├── Hero.astro             # Hero section
-│   ├── Skills.astro           # Scrolling skills bar
-│   ├── About.astro            # About + stats
-│   ├── Projects.astro         # Project cards
-│   ├── Experience.astro       # Work experience
-│   ├── Services.astro         # Services offered
-│   ├── Process.astro          # How I work
-│   ├── Contact.astro          # Contact + socials
-│   ├── Footer.astro           # Footer
-│   ├── ChatWidget.astro       # AI chat assistant
-│   └── ParticleBackground.astro # Binary rain animation
-├── layouts/
-│   └── Layout.astro           # Base layout + theme init
-├── pages/
-│   └── index.astro            # Main page
-└── styles/
-    └── global.css             # Theme variables + overrides
-tests/                         # Playwright test suites
-worker/                        # Cloudflare Worker (chat proxy)
-public/                        # Static assets (CV, logos, favicon)
 ```
 
 ## License
