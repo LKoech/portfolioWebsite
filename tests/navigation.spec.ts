@@ -71,4 +71,22 @@ test.describe('Mobile Navigation', () => {
       await expect(page.locator(`#mobile-menu a[href="${href}"]`).first()).toBeAttached();
     }
   });
+
+  test('no horizontal overflow on mobile', async ({ page }) => {
+    await page.goto('/');
+    const bodyWidth = await page.evaluate(() => document.body.scrollWidth);
+    const viewportWidth = await page.evaluate(() => window.innerWidth);
+    expect(bodyWidth).toBeLessThanOrEqual(viewportWidth + 1);
+  });
+});
+
+test.describe('No Horizontal Overflow - Desktop', () => {
+  test.use({ viewport: { width: 1280, height: 720 } });
+
+  test('no horizontal overflow', async ({ page }) => {
+    await page.goto('/');
+    const bodyWidth = await page.evaluate(() => document.body.scrollWidth);
+    const viewportWidth = await page.evaluate(() => window.innerWidth);
+    expect(bodyWidth).toBeLessThanOrEqual(viewportWidth + 1);
+  });
 });

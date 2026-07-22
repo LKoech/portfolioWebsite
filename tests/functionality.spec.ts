@@ -24,63 +24,6 @@ test.describe('Hero Buttons', () => {
   });
 });
 
-test.describe('Nav Scrolling', () => {
-  const navTargets = [
-    { label: 'Home', section: '#home' },
-    { label: 'About', section: '#about' },
-    { label: 'Projects', section: '#projects' },
-    { label: 'Experience', section: '#experience' },
-    { label: 'Services', section: '#services' },
-    { label: 'Contact', section: '#contact' },
-  ];
-
-  for (const { label, section } of navTargets) {
-    test(`clicking "${label}" scrolls to ${section}`, async ({ page }) => {
-      await page.goto('/');
-      if (label !== 'Home') {
-        await page.evaluate(() => window.scrollTo(0, 0));
-      } else {
-        await page.evaluate(() => window.scrollTo(0, 2000));
-        await page.waitForTimeout(300);
-      }
-      await page.click(`#navbar .hidden.md\\:flex a[href="${section}"]`);
-      await page.waitForTimeout(800);
-      await expect(page.locator(section)).toBeInViewport();
-    });
-  }
-
-  test('Hire Me scrolls to contact', async ({ page }) => {
-    await page.goto('/');
-    await page.locator('#navbar a:has-text("Hire Me")').first().click();
-    await page.waitForTimeout(800);
-    await expect(page.locator('#contact')).toBeInViewport();
-  });
-
-  test('LK logo scrolls to top', async ({ page }) => {
-    await page.goto('/');
-    await page.evaluate(() => window.scrollTo(0, 2000));
-    await page.waitForTimeout(300);
-    await page.click('#navbar a:has-text("LK")');
-    await page.waitForTimeout(800);
-    await expect(page.locator('#home')).toBeInViewport();
-  });
-});
-
-test.describe('Mobile Nav', () => {
-  test.use({ viewport: { width: 375, height: 812 } });
-
-  test('menu opens, link scrolls and closes menu', async ({ page }) => {
-    await page.goto('/');
-    await page.click('#mobile-menu-btn');
-    await expect(page.locator('#mobile-menu')).toHaveAttribute('data-open', 'true');
-
-    await page.click('#mobile-menu a[href="#projects"]');
-    await page.waitForTimeout(800);
-    await expect(page.locator('#mobile-menu')).toHaveAttribute('data-open', 'false');
-    await expect(page.locator('#projects')).toBeInViewport();
-  });
-});
-
 test.describe('External Links', () => {
   test('project card opens GitHub repo', async ({ page, context }) => {
     await page.goto('/');
