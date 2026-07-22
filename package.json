@@ -10,7 +10,8 @@
     "test:ui": "playwright test --ui"
   },
   "dependencies": {
-    "astro": "^5.9.4"
+    "astro": "^5.9.4",
+    "halftone-media": "^1.0.1"
   },
   "devDependencies": {
     "@astrojs/tailwind": "^6.0.2",
